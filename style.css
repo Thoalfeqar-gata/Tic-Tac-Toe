@@ -1,0 +1,45 @@
+/* global selectors */
+body
+{
+    height : 90vh;
+    background-color : grey;
+}
+
+/* board selectors */
+.board-container
+{
+    width : 540px;
+    height : 540px;
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform : translate(-50%, -50%);
+    background : black;
+
+    display : flex;
+    flex-wrap : wrap;
+}
+
+.board-block
+{
+    width : 33.3333%;
+    height : 33.3333%;
+    box-sizing : border-box;
+    border: 2px solid grey;
+    background : transparent;
+    color : white;
+
+    display : flex;
+    justify-content: center;
+    align-items : center;
+    font-size : 64px;
+    font-weight : bold;
+}
+
+.white-line
+{
+    width : 10%;
+    height : 10%;
+    background-color : white;
+}
+
