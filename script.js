@@ -1,5 +1,15 @@
 const Game = (() =>
 {
+    //DOM attributes
+    let prompt = document.querySelector(".winner-prompt");
+    let overlay = document.querySelector(".overlay");
+
+    overlay.addEventListener("click", event =>
+    {
+        prompt.classList.remove("winner-prompt-active");
+        overlay.classList.remove("overlay-active");
+    });
+
     //Inner factory functions.
     const Player = (playerName, playerMark) =>
     {
@@ -13,26 +23,29 @@ const Game = (() =>
     {
         //attrs
         let spots = [];
-        const blocks = document.querySelectorAll(".board-block");
-        let cases = [];
+        const markers = document.querySelectorAll(".marker-container");
+        
+        //this map should help visualize the 'cases' array.
+        /*
+            0 | 1 | 2
+          -------------
+            3 | 4 | 5
+          -------------
+            6 | 7 | 8
+        */
+        const cases = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
 
         //setup
 
-        //this map should help visualize the 'cases' array.
-        /*
-            0   1   2
-            3   4   5
-            6   7   8
-        */
-        cases = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
 
-        for(let i = 0; i < blocks.length; i++)
+        for(let i = 0; i < markers.length; i++)
         {
-            blocks[i].addEventListener("click", event =>
+            markers[i].addEventListener("click", event =>
             {
-                if(blocks[i].textContent == '')
+                if(markers[i].textContent == '')
                 {
                     spots[i] = currentPlayer.mark;
+                    markers[i].classList.add("marker-container-active");
                     checkAndUpdate(i);
                 }
             });
@@ -43,7 +56,7 @@ const Game = (() =>
         {
             for(let i = 0; i < spots.length; i++)
             {
-                blocks[i].textContent = spots[i];
+                markers[i].textContent = spots[i];
             }
         };
 
@@ -77,8 +90,13 @@ const Game = (() =>
 
             let [result, marker] = checkPossibleCases(...possibleCases);
 
-
-
+            if(result)
+            {
+                prompt.textContent = `The winner is: ${marker.toUpperCase()}.`;
+                prompt.classList.add("winner-prompt-active");
+                overlay.classList.add("overlay-active");
+                reInitialize();
+            }
             updateDisplay()
             updatePlayers();
         };
@@ -86,6 +104,11 @@ const Game = (() =>
         const reInitialize = () =>
         {
             spots = ['', '', '', '', '', '', '', '', ''];
+
+            for(let marker of markers)
+            {
+                marker.classList.remove("marker-container-active");
+            }
             updateDisplay();
         };
 
