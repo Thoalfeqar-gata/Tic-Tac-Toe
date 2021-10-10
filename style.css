@@ -96,22 +96,17 @@ body
     font-size : 72px;
 }
 
-/*welcome screen selectors*/
+/* welcome screen selectors */
 .welcome-screen
 {
+    width : 80%;
     position : absolute;
     top : 50%;
     left : 50%;
     transform : translate(-50%, -50%);
-
-    width : 550px;
-    height : 550px;
-    background-color : rgb(22, 22, 22);
-    border-radius : 10px;
-    display : flex;
-    flex-direction : column;
-    justify-content : center;
-    gap : 25px;
+    display : none;
+    flex-direction: column;
+    justify-content: center;
     align-items : center;
 }
 
@@ -120,6 +115,52 @@ body
     font-size: 30px;
     color : white;
     font-weight : bold;
+}
+
+.options-menu
+{
+    display : flex;
+    justify-content : center;
+    align-items : center;
+}
+
+.options,
+.start
+{
+    margin : 15px;
+    font-size : 26px;
+    color : black;
+    background-color : lightgray;
+    border-radius: 5px;
+    padding : 10px;
+    text-align : center;
+    transition : 300ms ease-in-out;
+}
+
+.options:hover,
+.start:hover
+{
+    font-size : 36px;
+    background-color : darkgray;
+}
+
+/*options screen selectors*/
+.options-screen
+{
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform : translate(-50%, -50%);
+
+    width : 650px;
+    height : 550px;
+    background-color : rgb(22, 22, 22);
+    border-radius : 10px;
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    gap : 25px;
+    align-items : center;
 }
 
 .marker-choice,
@@ -165,9 +206,10 @@ body
 }
 
 .second-player-opponent,
-.randomAI-opponent
+.randomAI-opponent,
+.smartAI-opponent
 {
-    width : 40%;
+    width : 28%;
     display: flex;
     justify-content : center;
     align-items : center;
@@ -179,9 +221,10 @@ body
     padding : 5px;
 }
 
-.opponent-hover,
+.opponent-selected,
 .second-player-opponent:hover,
-.randomAI-opponent:hover
+.randomAI-opponent:hover,
+.smartAI-opponent:hover
 {
     background-color: darkgray;
     font-size : 26px;

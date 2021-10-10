@@ -26,30 +26,34 @@ const Game = (() =>
                 {
                     spots[i] = currentPlayer.marker;
                     markers[i].classList.add("marker-container-active");
-                    let [result, marker] = checkWinner(i);
+                    let [result, winnerName] = checkWinner(i);
 
-                    if(result == true)
+                    if(result != null)
                     {
-                        displayWinner(marker);
+                        displayWinner(winnerName);
                     }
                     else
                     {               
-                        if(!spots.includes(''))
+                        if(isTie())
                         {
-                            displayWinner('tie');
+                            displayWinner(null);
                             return;
                         }
 
-                        if(secondPlayer.type == "random")
-                        {
-                            randomPlay();
-                        }
-                        else if(secondPlayer.type == "normal")
+                        if(secondPlayer.type == "normal")
                         {
                             if(currentPlayer == secondPlayer)
                                 updateCurrent(firstPlayer);
                             else
                                 updateCurrent(secondPlayer);
+                        }
+                        else if(secondPlayer.type == "random")
+                        {
+                            randomPlay();
+                        }
+                        else if(secondPlayer.type == "smart")
+                        {
+                            smartPlay();
                         }
                     }
                     updateDisplay();
@@ -58,6 +62,11 @@ const Game = (() =>
         }
 
         //methods
+
+        const isTie = () =>
+        {
+            return !spots.includes('');
+        };
 
         const updateDisplay = () =>
         {
@@ -78,44 +87,43 @@ const Game = (() =>
                 }
             }
 
-            let result = false;
-            let p = '';
-            
+            let result = null;
+            let winnerName = '';
+
             for(let c of possibleCases)
             {
-                result = (spots[c[0]] == spots[c[1]] && spots[c[1]] == spots[c[2]]);
-                if(result == true)
+                result = (spots[c[0]] == spots[c[1]] && spots[c[1]] == spots[c[2]]) ? spots[c[0]] : null;
+                if(result != null)
                 {
-                    if(spots[c[0]] == firstPlayer.marker)
+                    if(result == firstPlayer.marker)
                     {
-                        p = firstPlayer.name;
-                        return [result, p];
+                        winnerName = firstPlayer.name;
+                        return [result, winnerName];
                     }
                     else
                     {
-                        p = secondPlayer.name;
-                        return [result, p];
+                        winnerName = secondPlayer.name;
+                        return [result, winnerName];
                     }
                 }
             }
 
-            return [result, p];
+            return [result, winnerName];
         };
 
-        const displayWinner = (marker) =>
+        const displayWinner = (winnerName) =>
         {
-            if(marker == 'tie')
+            if(winnerName == null)
             {
                 prompt.textContent = "A tie!";
             }
             else
             {
-                prompt.textContent = `The winner is: ${marker}`;
+                prompt.textContent = `The winner is: ${winnerName}`;
             }
 
             prompt.classList.add("winner-prompt-active");
             overlay.classList.add("overlay-active");
-            reInitialize();
         }
 
         const reInitialize = () =>
@@ -129,6 +137,87 @@ const Game = (() =>
             updateDisplay();
         };
 
+
+        const minimax = (depth, isMaximizing, place) =>
+        {
+            let [result, winnerName] = checkWinner(place);
+            
+            if(result != null)
+            {
+                if(result == secondPlayer.marker)
+                {
+                    return 10;
+                }
+                else if(result == firstPlayer.marker)
+                {
+                    return -10;
+                }
+            }
+            else
+            {
+                if(isTie())
+                {
+                    return 0;
+                }
+            }
+
+            if(isMaximizing)
+            {
+                let bestScore = -Infinity;
+                for(let i = 0; i < spots.length; i++)
+                {
+                    if(spots[i] == '')
+                    {
+                        spots[i] = secondPlayer.marker;
+                        let score = minimax(depth + 1, false, i);
+                        spots[i] = '';
+                        bestScore = Math.max(bestScore, score);
+                    }
+                }
+                return bestScore;
+            }
+            else
+            {
+                let bestScore = Infinity;
+                for(let i = 0; i < spots.length; i++)
+                {
+                    if(spots[i] == '')
+                    {
+                        spots[i] = firstPlayer.marker;
+                        let score = minimax(depth + 1, true, i);
+                        spots[i] = '';
+                        bestScore = Math.min(bestScore, score);
+                    }
+                }
+                return bestScore;
+            }
+        };
+
+        const smartMove = () =>
+        {
+            let bestScore = -Infinity;
+            let move;
+            for(let i = 0; i < spots.length; i++)
+            {
+                if(spots[i] == '')
+                {
+                    spots[i] = secondPlayer.marker;
+                    let score = minimax(0, false, i);
+                    spots[i] = '';
+                    if(score > bestScore)
+                    {
+                        bestScore = score;
+                        move = i;
+                    }
+                }
+            }
+
+            spots[move] = secondPlayer.marker;
+            markers[move].classList.add("marker-container-active");
+            updateDisplay();
+            return move;
+        };
+
         const randomMove = (marker) =>
         {
             let validSpots = [];
@@ -137,11 +226,6 @@ const Game = (() =>
                 if(spots[i] == '')
                 {
                     validSpots.push(i);
-
-                    // spots[i] = marker;
-                    // markers[i].classList.add("marker-container-active");
-                    // updateDisplay();
-                    // return i;
                 }
             }
 
@@ -152,7 +236,7 @@ const Game = (() =>
             return randSpot;
         };
 
-        return {reInitialize, randomMove, checkWinner, displayWinner};
+        return {reInitialize, randomMove, smartMove, checkWinner, displayWinner, isTie};
     })();
 
     
@@ -173,29 +257,54 @@ const Game = (() =>
         return obj;
     };
 
+    const SmartPlayer = (playerName, playerMark) => 
+    {
+        let player = Player(playerName, playerMark);
+        let type = "smart";
+        let obj = Object.assign({}, player, {type});
+        return obj;
+    };
+
     //attributes
-    let firstPlayer = Player("first", "O");
-    let secondPlayer = Player("second", "X");
+    let firstPlayer = Player("X", "X");
+    let secondPlayer = Player("O", "O");
 
     //current player will be used if 2 players are playing against each other (humans).
-    let currentPlayer;
+    let currentPlayer = firstPlayer;
 
 
     let markerChoice = 0;
     let opponentChoice = 0;
     
     //DOM elements
+    const welcomeScreen = document.querySelector(".welcome-screen");
+    const start = document.querySelector(".start");
+    const options = document.querySelector(".options");
     const prompt = document.querySelector(".winner-prompt");
     const overlay = document.querySelector(".overlay");
-    const welcomeScreen = document.querySelector(".welcome-screen");
+    const optionsScreen = document.querySelector(".options-screen");
     const markerChoiceX = document.querySelector(".marker-choice-X");
     const markerChoiceO = document.querySelector(".marker-choice-O");
     const opponentOther = document.querySelector(".second-player-opponent");
     const opponentRandom = document.querySelector(".randomAI-opponent");
+    const opponentSmart = document.querySelector(".smartAI-opponent");
     const firstPlayerName = document.querySelector(".first-player-name");
     const secondPlayerName = document.querySelector(".second-player-name");
     const startButton = document.querySelector(".start-button");
     const board = document.querySelector(".board-container");
+
+
+    start.addEventListener("click", event =>
+    {
+        welcomeScreen.style.display = "none";
+        board.style.display = "flex";
+    });
+
+    options.addEventListener("click", event =>
+    {
+        welcomeScreen.style.display = "none";
+        optionsScreen.style.display = "flex";
+    });
 
     markerChoiceX.addEventListener("click", event =>
     {
@@ -213,16 +322,26 @@ const Game = (() =>
 
     opponentOther.addEventListener("click", event =>
     {
-        event.target.classList.add("opponent-hover");
-        opponentRandom.classList.remove("opponent-hover");
+        event.target.classList.add("opponent-selected");
+        opponentSmart.classList.remove("opponent-selected");
+        opponentRandom.classList.remove("opponent-selected");
         opponentChoice = "normal";
     });
 
     opponentRandom.addEventListener("click", event =>
     {
-        event.target.classList.add("opponent-hover");
-        opponentOther.classList.remove("opponent-hover");
+        event.target.classList.add("opponent-selected");
+        opponentSmart.classList.remove("opponent-selected");
+        opponentOther.classList.remove("opponent-selected");
         opponentChoice = "random";
+    });
+
+    opponentSmart.addEventListener("click", event =>
+    {
+        event.target.classList.add("opponent-selected");
+        opponentRandom.classList.remove("opponent-selected");
+        opponentOther.classList.remove("opponent-selected");
+        opponentChoice = "smart";
     });
 
     firstPlayerName.addEventListener("change", event =>
@@ -237,28 +356,66 @@ const Game = (() =>
 
     startButton.addEventListener("click", event =>
     {
-        if(markerChoice != 0)
-        {
-            firstPlayer.marker = markerChoice;
-        }
         if(opponentChoice != 0)
         {
+            if(opponentChoice == "normal")
+            {
+                secondPlayer = Player(secondPlayerName.value, "O");
+            }
+
             if(opponentChoice == "random")
             {
-                secondPlayer = RandomPlayer("random AI");
-                if(firstPlayer.marker == 'X')
+                if(markerChoice == "X")
                 {
-                    secondPlayer.marker = 'O';
+                    if(secondPlayerName.value == '')
+                        secondPlayer = RandomPlayer("Random AI", "O");
+                    else
+                        secondPlayer = RandomPlayer(secondPlayerName.value, "O");    
                 }
                 else
                 {
-                    secondPlayer.marker = 'X';
+                    if(secondPlayerName.value == '')
+                        secondPlayer = RandomPlayer("Random AI", "X");
+                    else
+                        secondPlayer = RandomPlayer(secondPlayerName.value, "X");    
+            
+                    if(firstPlayerName.value == '')
+                        firstPlayer = Player("O", "O");
+                    else
+                        firstPlayer = Player(firstPlayerName.value, "O");
+
+                    randomPlay();
+                }
+            }
+
+            if(opponentChoice == "smart")
+            {
+                if(markerChoice == "X")
+                {
+                    if(secondPlayerName.value == '')
+                        secondPlayer = SmartPlayer("Smart AI", "O");
+                    else
+                        secondPlayer = SmartPlayer(secondPlayerName.value, "O");    
+                }
+                else
+                {
+                    if(secondPlayerName.value == '')
+                        secondPlayer = SmartPlayer("Smart AI", "X");
+                    else
+                        secondPlayer = SmartPlayer(secondPlayerName.value, "X");    
+            
+                    if(firstPlayerName.value == '')
+                        firstPlayer = Player("O", "O");
+                    else
+                        firstPlayer = Player(firstPlayerName.value, "O");
+
+                    smartPlay();
                 }
             }
         }
 
         currentPlayer = firstPlayer;
-        welcomeScreen.style.display = "none";
+        optionsScreen.style.display = "none";
         board.style.display = "flex";
     });
 
@@ -266,6 +423,11 @@ const Game = (() =>
     {
         prompt.classList.remove("winner-prompt-active");
         overlay.classList.remove("overlay-active");
+        GameBoard.reInitialize();
+        updateCurrent(firstPlayer);
+
+        if(firstPlayer.marker == "O")
+            randomPlay();
     });
 
 
@@ -273,13 +435,38 @@ const Game = (() =>
     const randomPlay = () =>
     {
         let place = GameBoard.randomMove(secondPlayer.marker);
-        let [result, marker] = GameBoard.checkWinner(place);
+        let [result, winnerName] = GameBoard.checkWinner(place);
         
-        if(result == true)
+        if(result != null)
         {
-            GameBoard.displayWinner(marker);
+            GameBoard.displayWinner(winnerName);
         }
-    }
+        else
+        {
+            if(GameBoard.isTie())
+            {
+                GameBoard.displayWinner(null);
+            }
+        }
+    };
+
+    const smartPlay = () =>
+    {
+        let place = GameBoard.smartMove(secondPlayer.marker);
+        let [result, winnerName] = GameBoard.checkWinner(place);
+
+        if(result != null)
+        {
+            GameBoard.displayWinner(winnerName);
+        }
+        else
+        {
+            if(GameBoard.isTie())
+            {
+                GameBoard.displayWinner(null);
+            }
+        }
+    };
 
     const updateCurrent = (to) =>
     {
