@@ -1,4 +1,18 @@
-/* welcome screen selectors */
+/* global selectors */
+body{
+    font-family: roboto, arial, helvetica, sans-serif;
+    background-color : black;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+
+
+
+/* START welcome screen style */
 .welcome-screen{
     position: absolute;
     inset: 0;
@@ -38,9 +52,13 @@
     transform: scale(1.09);
     background-color : darkgray;
 }
+/* END welcome screen style */
 
 
 
+
+
+/* START options screen style */
 .options-screen{
     display: none;
     color: white;
@@ -48,7 +66,6 @@
     border-radius: 15px;
     align-items: center;
     height: 50vh;
-    display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto auto auto auto;
     width: fit-content;
@@ -94,6 +111,7 @@ input, select{
 
 
 @media (max-width: 768px){
+    /* all options-screen style created using css grid system*/
     .options-screen{
         grid-template-columns: 1fr;
         row-gap: 10px;
@@ -103,18 +121,14 @@ input, select{
         text-align: left;
     }
 }
+/* END options screen style */
 
 
 
 
 
 
-/* global selectors */
-body{
-    font-family: roboto, arial, helvetica, sans-serif;
-    background-color : black;
-    margin: 0;
-}
+
 
 
 /*winner prompt selectors*/
@@ -214,31 +228,7 @@ body{
 }
 
 
-.marker-choice-text
-{
-    font-weight : bold;
-}
 
-.opponent-text
-{
-    font-weight : bold;
-}
-
-.marker-choice,
-.opponent-choice
-{
-    display : flex;
-    flex-direction : column;
-    justify-content : center;
-    align-items : center;
-    color : black;
-    font-size : 22px;
-}
-
-.opponent-choice 
-{
-    width : 100%;
-}
 
 .marker-choices,
 .opponent-choices
@@ -252,152 +242,9 @@ body{
     text-align: center;
 }
 
-.opponent-text
-{
-    text-align : center;
-}
-
-.marker-choice-X,
-.marker-choice-O
-{
-    width : 30%;
-    text-align : center;
-    background-color : black;
-    border-radius : 5px;
-    color : white;
-    cursor : pointer;
-    display : flex;
-    justify-content : center;
-    align-items : center;
-    transition : 300ms ease-in-out;
-}
-
-.marker-hover,
-.marker-choice-X:hover,
-.marker-choice-O:hover
-{
-    background-color : rgb(53, 53, 53);
-    font-size : 32px;
-}
-
-.second-player-opponent,
-.randomAI-opponent,
-.smartAI-opponent
-{
-    display: flex;
-    justify-content : center;
-    align-items : center;
-    background-color : black;
-    border-radius : 5px;
-    color : white;
-    cursor : pointer;
-    transition : 300ms ease-in-out;
-    padding : 5px;
-}
-
-.opponent-selected,
-.second-player-opponent:hover,
-.randomAI-opponent:hover,
-.smartAI-opponent:hover
-{
-    background-color: rgb(53, 53, 53);
-    font-size : 26px;
-}
-
-.start-button
-{
-    font-size : 20px;
-    background-color : rgb(0, 0, 0);
-    color : white;
-    border-radius : 5px;
-    padding : 8px;
-    transition : 300ms ease-in-out;
-}
-
-.start-button:hover
-{
-    background-color : rgb(53, 53, 53);
-    font-size : 32px;
-}
-
-.names-field
-{
-    display : flex;
-    flex-wrap : wrap;
-    justify-content : center;
-    align-items : center;
-    gap : 10px;
-}
-
-.name-field-text
-{
-    font-size : 16px;
-    font-weight : bold;
-    text-align : center;
-    color : black;
-}
-
-.message
-{
-    width : 80%;
-    text-align : center;
-    font-size : 22px;
-    color : black;
-    font-weight : bold;
-}
-
-/* media queries for mobile */
 
 @media (max-width: 520px) , (max-height : 520px)
 {
-
-    .marker-hover,
-    .marker-choice-X:hover,
-    .marker-choice-O:hover
-    {
-        background-color : rgb(53, 53, 53);
-        font-size : 22px;
-    }
-
-    .opponent-choices
-    {
-        flex-wrap : wrap;
-        gap : 15px;
-        padding : 5px;
-        font-size : 16px;
-    }
-    
-    .opponent-text
-    {
-        font-size : 18px;
-    }
-
-
-    .opponent-selected,
-    .second-player-opponent:hover,
-    .randomAI-opponent:hover,
-    .smartAI-opponent:hover
-    {
-        background-color: rgb(53, 53, 53);
-        font-size : 22px;
-    }
-
-
-    .name-field-text
-    {
-        font-size : 14px;
-    }
-
-    .start-button
-    {
-        font-size : 16px;
-    }
-
-    .message
-    {
-        font-size : 12px;
-    }
-
     /* board */
     .board-container
     {
@@ -416,5 +263,4 @@ body{
         font-size : 20px;
         height : 20%;
     }
-
 }

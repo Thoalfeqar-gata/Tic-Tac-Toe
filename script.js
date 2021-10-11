@@ -293,11 +293,6 @@ const Game = (() =>
     const prompt = document.querySelector(".winner-prompt");
     const overlay = document.querySelector(".overlay");
     const optionsScreen = document.querySelector(".options-screen");
-    const markerChoiceX = document.querySelector(".marker-choice-X");
-    const markerChoiceO = document.querySelector(".marker-choice-O");
-    const opponentOther = document.querySelector(".second-player-opponent");
-    const opponentRandom = document.querySelector(".randomAI-opponent");
-    const opponentSmart = document.querySelector(".smartAI-opponent");
     const firstPlayerName = document.querySelector(".first-player-name");
     const secondPlayerName = document.querySelector(".second-player-name");
     const startButton = document.querySelector(".start-button");
