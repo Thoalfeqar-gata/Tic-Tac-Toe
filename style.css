@@ -7,11 +7,6 @@ body{
 }
 
 
-
-
-
-
-
 /* START welcome screen style */
 .welcome-screen{
     position: absolute;
@@ -37,7 +32,7 @@ body{
     gap: 20px;
 }
 .options,
-.start{
+.multiplayer{
     color : black;
     font-weight: 600;
     background-color : lightgray;
@@ -48,7 +43,7 @@ body{
     cursor: pointer;
 }
 .options:hover,
-.start:hover{
+.multiplayer:hover{
     transform: scale(1.09);
     background-color : darkgray;
 }

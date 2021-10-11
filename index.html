@@ -14,7 +14,7 @@
       <div class = "welcome-screen">
          <div class = "welcome-text"> Welcome to Tic Tac Toe! </div>
          <div class = "options-menu">
-            <div class = "start">Start with defaults</div>
+            <div class = "multiplayer">Start with defaults</div>
             <div class = "options">More options</div>
          </div>
       </div>
@@ -35,6 +35,12 @@
         </select>
 
         <button class="start-game-btn start-button">start the game</button>
+      </div>
+
+
+
+      <div class="multiplayer-screen">
+          
       </div>
 
 
@@ -77,6 +83,19 @@
 
 
 
-      
+      <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
+        // web app Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDz-CSU24VJcs9Gqk8JzqcdqUx9RoJMwZA",
+          authDomain: "tic-tac-toe-project-c7c17.firebaseapp.com",
+          projectId: "tic-tac-toe-project-c7c17",
+          storageBucket: "tic-tac-toe-project-c7c17.appspot.com",
+          messagingSenderId: "341483133647",
+          appId: "1:341483133647:web:61161cd38a0777348035ba"
+        };
+        // Initializing Firebase
+        const app = initializeApp(firebaseConfig);
+      </script>
    </body>
 </html>

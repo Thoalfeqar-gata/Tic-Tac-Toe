@@ -1,5 +1,6 @@
-const Game = (() =>
-{
+const Game = (() =>{
+
+
     //Inner factory functions.    
     const GameBoard = (() =>
     {
@@ -28,12 +29,11 @@ const Game = (() =>
 
         //setup
         for(let i = 0; i < markers.length; i++){
-
-
             markers[i].addEventListener("click", event =>{
-
                 
                 if(markers[i].textContent == ''){
+                    console.log(spots);
+
                     spots[i] = currentPlayer.marker;
                     markers[i].classList.add("marker-container-active");
                     let [result, winnerName] = checkWinner(i);
@@ -288,7 +288,7 @@ const Game = (() =>
     
     //DOM elements
     const welcomeScreen = document.querySelector(".welcome-screen");
-    const start = document.querySelector(".start");
+    // const start = document.querySelector(".start");
     const options = document.querySelector(".options");
     const prompt = document.querySelector(".winner-prompt");
     const overlay = document.querySelector(".overlay");
@@ -306,10 +306,10 @@ const Game = (() =>
         opponentChoice = secondplayer.value
     })
 
-    start.addEventListener("click", event =>{
-        welcomeScreen.style.display = "none";
-        board.style.display = "flex";
-    });
+    // start.addEventListener("click", event =>{
+    //     welcomeScreen.style.display = "none";
+    //     board.style.display = "flex";
+    // });
 
 
     options.addEventListener("click", event =>{
@@ -327,63 +327,70 @@ const Game = (() =>
         secondPlayer.name = event.target.value;
     });
 
+
+
+
     startButton.addEventListener("click", event =>
     {
+
         if(opponentChoice != 0)
         {
-            if(opponentChoice == "normal")
-            {
-                secondPlayer = Player(secondPlayerName.value, "O");
-            }
 
-            if(opponentChoice == "random")
-            {
-                if(markerChoice == "X")
-                {
-                    if(secondPlayerName.value == '')
-                        secondPlayer = RandomPlayer("Random AI", "O");
-                    else
-                        secondPlayer = RandomPlayer(secondPlayerName.value, "O");    
-                }
-                else
-                {
-                    if(secondPlayerName.value == '')
-                        secondPlayer = RandomPlayer("Random AI", "X");
-                    else
-                        secondPlayer = RandomPlayer(secondPlayerName.value, "X");    
-            
-                    if(firstPlayerName.value == '')
-                        firstPlayer = Player("O", "O");
-                    else
-                        firstPlayer = Player(firstPlayerName.value, "O");
+            switch(opponentChoice){
+                case 'normal' :
+                    secondPlayer = Player(secondPlayerName.value, "O");
+                break;
 
-                    randomPlay();
-                }
-            }
 
-            if(opponentChoice == "smart")
-            {
-                if(markerChoice == "X")
-                {
-                    if(secondPlayerName.value == '')
-                        secondPlayer = SmartPlayer("Smart AI", "O");
+                case 'random':
+                    if(markerChoice == "X")
+                    {
+                        if(secondPlayerName.value == '')
+                            secondPlayer = RandomPlayer("Random AI", "O");
+                        else
+                            secondPlayer = RandomPlayer(secondPlayerName.value, "O");    
+                    }
                     else
-                        secondPlayer = SmartPlayer(secondPlayerName.value, "O");    
-                }
-                else
-                {
-                    if(secondPlayerName.value == '')
-                        secondPlayer = SmartPlayer("Smart AI", "X");
-                    else
-                        secondPlayer = SmartPlayer(secondPlayerName.value, "X");    
-            
-                    if(firstPlayerName.value == '')
-                        firstPlayer = Player("O", "O");
-                    else
-                        firstPlayer = Player(firstPlayerName.value, "O");
+                    {
+                        if(secondPlayerName.value == '')
+                            secondPlayer = RandomPlayer("Random AI", "X");
+                        else
+                            secondPlayer = RandomPlayer(secondPlayerName.value, "X");    
+                
+                        if(firstPlayerName.value == '')
+                            firstPlayer = Player("O", "O");
+                        else
+                            firstPlayer = Player(firstPlayerName.value, "O");
 
-                    smartPlay();
-                }
+                        randomPlay();
+                    }
+                break;
+                
+
+
+                case "smart":
+                        if(markerChoice == "X")
+                    {
+                        if(secondPlayerName.value == '')
+                            secondPlayer = SmartPlayer("Smart AI", "O");
+                        else
+                            secondPlayer = SmartPlayer(secondPlayerName.value, "O");    
+                    }
+                    else
+                    {
+                        if(secondPlayerName.value == '')
+                            secondPlayer = SmartPlayer("Smart AI", "X");
+                        else
+                            secondPlayer = SmartPlayer(secondPlayerName.value, "X");    
+                
+                        if(firstPlayerName.value == '')
+                            firstPlayer = Player("O", "O");
+                        else
+                            firstPlayer = Player(firstPlayerName.value, "O");
+
+                        smartPlay();
+                    }
+                break;
             }
         }
 
@@ -402,6 +409,10 @@ const Game = (() =>
         if(firstPlayer.marker == "O")
             randomPlay();
     });
+
+
+
+
 
 
     //methods
@@ -451,7 +462,33 @@ const Game = (() =>
         GameBoard.reInitialize();
     };
 
+
+
+
+    // adding firebase
+    const multiplayer = document.querySelector('.multiplayer')
+    multiplayer.addEventListener('click', ()=>{
+        welcomeScreen.style='display:none;'
+        
+    })
+
+
+
+
+
+
+
+
+
+
+
     return {run};
 })();
 
 Game.run();
+
+
+
+
+
+
