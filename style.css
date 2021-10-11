@@ -231,6 +231,14 @@ body
     transition : 300ms ease-in-out;
 }
 
+.marker-hover,
+.marker-choice-X:hover,
+.marker-choice-O:hover
+{
+    background-color : rgb(53, 53, 53);
+    font-size : 32px;
+}
+
 .second-player-opponent,
 .randomAI-opponent,
 .smartAI-opponent
@@ -253,14 +261,6 @@ body
 {
     background-color: rgb(53, 53, 53);
     font-size : 26px;
-}
-
-.marker-hover,
-.marker-choice-X:hover,
-.marker-choice-O:hover
-{
-    background-color : rgb(53, 53, 53);
-    font-size : 32px;
 }
 
 .start-button
@@ -330,16 +330,61 @@ body
         gap : 10px;
     }
 
+    .marker-choice-text
+    {
+        font-size : 18px;
+    }
+
+    .marker-choices
+    {
+        font-size : 16px;
+    }
+
+    .marker-hover,
+    .marker-choice-X:hover,
+    .marker-choice-O:hover
+    {
+        background-color : rgb(53, 53, 53);
+        font-size : 22px;
+    }
+
     .opponent-choices
     {
         flex-wrap : wrap;
         gap : 15px;
         padding : 5px;
+        font-size : 16px;
+    }
+    
+    .opponent-text
+    {
+        font-size : 18px;
+    }
+
+
+    .opponent-selected,
+    .second-player-opponent:hover,
+    .randomAI-opponent:hover,
+    .smartAI-opponent:hover
+    {
+        background-color: rgb(53, 53, 53);
+        font-size : 22px;
+    }
+
+
+    .name-field-text
+    {
+        font-size : 14px;
+    }
+
+    .start-button
+    {
+        font-size : 16px;
     }
 
     .message
     {
-        font-size : 16px;
+        font-size : 12px;
     }
 
     /* board */
