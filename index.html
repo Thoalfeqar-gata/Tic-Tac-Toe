@@ -1,110 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel = "stylesheet" href = "style.css">
-        <script defer src = "script.js"></script>
-        <title>Tic Tac Toe</title>
-    </head>
-    <body>
-
-        <div class = "welcome-screen">
-            <div class = "welcome-text"> Welcome to Tic Tac Toe! </div>
-            <div class = "options-menu">
-                <div class = "start">Start with defaults</div>
-                <div class = "options">More options</div>
-            </div>
-        </div>
-
-        <div class = "options-screen">
-            <div class = "marker-choice">
-                
-                <div class = "marker-choice-text">
-                    Choose your marker
-                </div>
-
-                <div class = "marker-choices">
-                    <div class = "marker-choice-X">X</div>
-                    <div class = "marker-choice-O">O</div>
-                </div>
-
-            </div>
-
-            <div class = "opponent-choice">
-                <div class = "opponent-text">
-                    Choose the second player
-                </div>
-                <div class = "opponent-choices">
-                    <div class = "second-player-opponent">Another player</div>
-                    <div class = "randomAI-opponent">Random AI</div>
-                    <div class = "smartAI-opponent">Smart AI</div>
-                </div>
-            </div>
-
-            <div class = "names-field">
-                <div class = "name-field-wrapper">
-                    <div class = "name-field-text">First player's name</div>
-                    <input type = "text" class = "first-player-name">
-                </div>
-                <div class = "name-field-wrapper">
-                    <div class = "name-field-text">Second player's name</div>
-                    <input type = "text" class = "second-player-name">
-                </div>
-            </div>
-            <div class = "start-button">Start</div>
-
-            <div class = "message">
-                If you don't choose something, the game will choose the defaults.
-            </div>
-        </div>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel = "stylesheet" href = "style.css">
+      <script defer src = "script.js"></script>
+      <title>Tic Tac Toe</title>
+   </head>
+   <body>
 
 
-        <div class = "overlay">
 
-        </div>
-        
-        <div class = "winner-prompt">
-            
-        </div>
+      <div class = "welcome-screen">
+         <div class = "welcome-text"> Welcome to Tic Tac Toe! </div>
+         <div class = "options-menu">
+            <div class = "start">Start with defaults</div>
+            <div class = "options">More options</div>
+         </div>
+      </div>
 
-        <div class = "board-container">
-            <div id = "top-left" class = "board-block">
-                <div class = "marker-container"></div>
-            </div>
 
-            <div id = "top" class = "board-block">
-                <div class = "marker-container"></div>
-            </div>
-            
-            <div id = "top-right" class = "board-block">
-                <div class = "marker-container"></div>
-            </div>
-            
-            <div id = "left" class = "board-block">
-                <div class = "marker-container"></div>
-            </div>
-            
-            <div id = "middle" class = "board-block">
-                <div class = "marker-container"></div>
-            </div>
-            
-            <div id = "right" class = "board-block">
-                <div class = "marker-container"></div>
-            </div>
-            
-            <div id = "bottom-left" class = "board-block">
-                <div class = "marker-container"></div>
-            </div>
-            
-            <div id = "bottom" class = "board-block">
-                <div class = "marker-container"></div>
-            </div>
-            
-            <div id = "bottom-right" class = "board-block">
-                <div class = "marker-container"></div>
-            </div>
-        </div>
 
-    </body>
+
+      
+      <!-- <div class = "options-screen">
+         <div class = "marker-choice">
+            <div class = "marker-choice-text">
+               Choose your marker
+            </div>
+            <div class = "marker-choices">
+               <div class = "marker-choice-X">X</div>
+               <div class = "marker-choice-O">O</div>
+            </div>
+         </div>
+         <div class = "opponent-choice">
+            <div class = "opponent-text">
+               Choose the second player
+            </div>
+            <div class = "opponent-choices">
+               <div class = "second-player-opponent">Another player</div>
+               <div class = "randomAI-opponent">Random AI</div>
+               <div class = "smartAI-opponent">Smart AI</div>
+            </div>
+         </div>
+         <div class = "names-field">
+            <div class = "name-field-wrapper">
+               <div class = "name-field-text">First player's name</div>
+               <input type = "text" class = "first-player-name">
+            </div>
+            <div class = "name-field-wrapper">
+               <div class = "name-field-text">Second player's name</div>
+               <input type = "text" class = "second-player-name">
+            </div>
+         </div>
+         <div class = "start-button">Start</div>
+         <div class = "message">
+            If you don't choose something, the game will choose the defaults.
+         </div>
+      </div> -->
+
+
+      <div class="options-screen">
+        <label for="my-name">name</label>
+        <input type="text" class="first-player-name">
+
+        <label for="opponent-name">name</label>
+        <input type="text" class="second-player-name">
+
+        <label>second player</label>
+        <select class="second-player">
+            <option value="normal">two players</option>
+            <option value="random">random ai</option>
+            <option value="smart">smart ai</option>
+        </select>
+
+        <button class="start-game-btn start-button">start the game</button>
+      </div>
+
+
+
+
+      <div class = "overlay">
+      </div>
+      <div class = "winner-prompt">
+      </div>
+      <div class = "board-container">
+         <div id = "top-left" class = "board-block">
+            <div class = "marker-container"></div>
+         </div>
+         <div id = "top" class = "board-block">
+            <div class = "marker-container"></div>
+         </div>
+         <div id = "top-right" class = "board-block">
+            <div class = "marker-container"></div>
+         </div>
+         <div id = "left" class = "board-block">
+            <div class = "marker-container"></div>
+         </div>
+         <div id = "middle" class = "board-block">
+            <div class = "marker-container"></div>
+         </div>
+         <div id = "right" class = "board-block">
+            <div class = "marker-container"></div>
+         </div>
+         <div id = "bottom-left" class = "board-block">
+            <div class = "marker-container"></div>
+         </div>
+         <div id = "bottom" class = "board-block">
+            <div class = "marker-container"></div>
+         </div>
+         <div id = "bottom-right" class = "board-block">
+            <div class = "marker-container"></div>
+         </div>
+      </div>
+
+
+
+
+      
+   </body>
 </html>

@@ -15,15 +15,25 @@ const Game = (() =>
           -------------
             6 | 7 | 8
         */
-        const cases = [[0, 4, 8], [2, 4, 6], [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
+        const cases = [[0, 4, 8],
+                       [2, 4, 6],
+                       [0, 1, 2],
+                       [3, 4, 5],
+                       [6, 7, 8],
+                       [0, 3, 6], 
+                       [1, 4, 7], 
+                       [2, 5, 8]];
+// ////////////////////////////////////////////
+// ////////////////////////////////////////////
 
         //setup
-        for(let i = 0; i < markers.length; i++)
-        {
-            markers[i].addEventListener("click", event =>
-            {
-                if(markers[i].textContent == '')
-                {
+        for(let i = 0; i < markers.length; i++){
+
+
+            markers[i].addEventListener("click", event =>{
+
+                
+                if(markers[i].textContent == ''){
                     spots[i] = currentPlayer.marker;
                     markers[i].classList.add("marker-container-active");
                     let [result, winnerName] = checkWinner(i);
@@ -292,56 +302,24 @@ const Game = (() =>
     const secondPlayerName = document.querySelector(".second-player-name");
     const startButton = document.querySelector(".start-button");
     const board = document.querySelector(".board-container");
+    markerChoice = 'X';
+    markerChoice = 'O';
 
+    const secondplayer = document.querySelector(".second-player")
 
-    start.addEventListener("click", event =>
-    {
+    secondplayer.addEventListener('change', (e)=>{
+        opponentChoice = secondplayer.value
+    })
+
+    start.addEventListener("click", event =>{
         welcomeScreen.style.display = "none";
         board.style.display = "flex";
     });
 
-    options.addEventListener("click", event =>
-    {
+
+    options.addEventListener("click", event =>{
         welcomeScreen.style.display = "none";
-        optionsScreen.style.display = "flex";
-    });
-
-    markerChoiceX.addEventListener("click", event =>
-    {
-        event.target.classList.add("marker-hover");
-        markerChoiceO.classList.remove("marker-hover");
-        markerChoice = 'X';
-    });
-
-    markerChoiceO.addEventListener("click", event =>
-    {
-        event.target.classList.add("marker-hover");
-        markerChoiceX.classList.remove("marker-hover");
-        markerChoice = 'O';
-    });
-
-    opponentOther.addEventListener("click", event =>
-    {
-        event.target.classList.add("opponent-selected");
-        opponentSmart.classList.remove("opponent-selected");
-        opponentRandom.classList.remove("opponent-selected");
-        opponentChoice = "normal";
-    });
-
-    opponentRandom.addEventListener("click", event =>
-    {
-        event.target.classList.add("opponent-selected");
-        opponentSmart.classList.remove("opponent-selected");
-        opponentOther.classList.remove("opponent-selected");
-        opponentChoice = "random";
-    });
-
-    opponentSmart.addEventListener("click", event =>
-    {
-        event.target.classList.add("opponent-selected");
-        opponentRandom.classList.remove("opponent-selected");
-        opponentOther.classList.remove("opponent-selected");
-        opponentChoice = "smart";
+        optionsScreen.style.display = "grid";
     });
 
     firstPlayerName.addEventListener("change", event =>
