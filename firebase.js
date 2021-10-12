@@ -10,16 +10,3 @@ const firebaseConfig = {
  const app = firebase.initializeApp(firebaseConfig);
  const db = firebase.firestore()
 
-
-
-const rooms = db.collection('rooms')
-rooms.get().then((snapshot) =>{
-    snapshot.forEach((room) =>{
-        // console.log(room.data());
-    })
-})
-
-rooms.doc('room1').set({
-    spots : "1"
-})
-

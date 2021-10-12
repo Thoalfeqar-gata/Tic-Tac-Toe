@@ -41,8 +41,42 @@ const Game = (() =>{
 
 
                 if(markers[i].textContent == ''){
+
+
+                    
+
+
                     spots[i] = currentPlayer.marker;
                     markers[i].classList.add("marker-container-active");
+                    
+                    if (opponentChoice=='multiplayer') {
+                        const oldspots = db.collection('rooms').doc('testroom').get()
+                        oldspots.then((newspots) =>{
+                            console.log(newspots);
+                        })
+                        
+                        oldspots[i]==currentPlayer.marker;
+
+                        db.collection('rooms').doc('testroom').set({
+                            spots : [...oldspots]
+                        })
+
+
+                        db.collection('rooms').doc('testroom').get().then((snapshot)=>{
+                            let gotSpots=snapshot.data().spots
+
+                            for(let index=0; index<=8; index++) {
+                                if(gotSpots[index]=='X'){
+                                    // var xss = document.querySelector(`#sq-${index}`)
+                                    var xss = document.querySelector(`.sq-${index}`)
+                                    xss.classList.add('marker-container-active')
+                                }
+                            }
+                            
+                        })
+
+                    }
+
                     let [result, winnerName] = checkWinner(i);
 
                     if(result != null)
@@ -51,26 +85,28 @@ const Game = (() =>{
                     }
                     else
                     {               
-                        if(isTie())
-                        {
+                        if(isTie()){
                             displayWinner(null);
                             return;
                         }
 
-                        if(secondPlayer.type == "normal")
-                        {
-                            if(currentPlayer == secondPlayer)
-                                updateCurrent(firstPlayer);
-                            else
-                                updateCurrent(secondPlayer);
-                        }
-                        else if(secondPlayer.type == "random")
-                        {
-                            randomPlay();
-                        }
-                        else if(secondPlayer.type == "smart")
-                        {
-                            smartPlay();
+
+                        switch (secondPlayer.type){
+
+                            case "normal":
+                                if(currentPlayer == secondPlayer)
+                                    updateCurrent(firstPlayer);
+                                else
+                                    updateCurrent(secondPlayer);
+                            break;
+
+                            case "random":
+                                randomPlay();
+                            break;
+
+                            case "smart":
+                                smartPlay();
+                            break;
                         }
                     }
                     updateDisplay();
@@ -313,11 +349,6 @@ const Game = (() =>{
         opponentChoice = secondplayer.value
     })
 
-    // start.addEventListener("click", event =>{
-    //     welcomeScreen.style.display = "none";
-    //     board.style.display = "flex";
-    // });
-
 
     options.addEventListener("click", event =>{
         welcomeScreen.style.display = "none";
@@ -484,14 +515,10 @@ const Game = (() =>{
     const multiplayerScreen = document.querySelector(".multiplayer-screen")
 
 
-    // delete later
-    // welcomeScreen.style='display:none;'
-    // multiplayerScreen.style='display:grid;'
-    // delete later
-
-
     multiplayer.addEventListener('click', ()=>{
         // var myName = prompt("enter your name please : ")
+        opponentChoice = 'multiplayer'
+
         var myName = 'omar'
 
         welcomeScreen.style='display:none;'
@@ -508,17 +535,20 @@ const Game = (() =>{
                          </div>
                          `
             })
-        })
+        }).then(()=>{
+            const challangeBtn = document.querySelectorAll('.challange-btn')
+            challangeBtn.forEach((btn) =>{
+                btn.addEventListener('click', () =>{
+                    multiplayerScreen.style='display:none;'
+                    board.style.display = "flex";
 
-
-        opponentChoice = 'multiplayer'
-        const challangeBtn = document.querySelectorAll('.challange-btn')
-        challangeBtn.forEach((btn) =>{
-            btn.addEventListener('click', () =>{
-                console.log('s');
+                    console.log(opponentChoice);
+                })
             })
         })
     })
+
+    
 
 
 
