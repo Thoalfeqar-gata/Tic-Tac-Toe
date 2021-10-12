@@ -310,10 +310,10 @@ body {
 
 .multiplayer-screen{
     display: none;
+    /* display: grid; */
     position: absolute;
     inset: 20px 10vw;
     border-radius: 15px;
-    /* display: grid; */
     grid-template-columns: 300px minmax(400px,1fr);
     grid-template-rows: auto 250px 1fr;
     grid-template-areas: 

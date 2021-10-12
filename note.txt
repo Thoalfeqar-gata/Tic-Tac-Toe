@@ -1,6 +1,6 @@
 TODO : 
-    1- change the desgin little bit
-    2- ordering the javascript and css code
+    ✔️ 1- change the desgin little bit 
+    ✔️ 2- ordering the javascript and css code
     3- add multiplayer
     4- pannel to show recent games
     5- pannel to show players and a challenge button to challenge them

@@ -36,9 +36,11 @@ const Game = (() =>{
         for(let i = 0; i < markers.length; i++){
             markers[i].addEventListener("click", event =>{
                 
-                if(markers[i].textContent == ''){
-                    console.log(spots);
 
+
+
+
+                if(markers[i].textContent == ''){
                     spots[i] = currentPlayer.marker;
                     markers[i].classList.add("marker-container-active");
                     let [result, winnerName] = checkWinner(i);
@@ -346,14 +348,13 @@ const Game = (() =>{
                     secondPlayer = Player(secondPlayerName.value, "O");
                 break;
 
-
                 case 'random':
                     if(markerChoice == "X")
                     {
                         if(secondPlayerName.value == '')
                             secondPlayer = RandomPlayer("Random AI", "O");
                         else
-                            secondPlayer = RandomPlayer(secondPlayerName.value, "O");    
+                            secondPlayer = RandomPlayer(secondPlayerName.value, "O");
                     }
                     else
                     {
@@ -470,27 +471,71 @@ const Game = (() =>{
 
 
 
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+
     // adding firebase
     const multiplayer = document.querySelector('.multiplayer')
     const multiplayerScreen = document.querySelector(".multiplayer-screen")
-    
+
+
+    // delete later
+    // welcomeScreen.style='display:none;'
+    // multiplayerScreen.style='display:grid;'
+    // delete later
+
 
     multiplayer.addEventListener('click', ()=>{
-        var myName = prompt("enter your name please : ")
+        // var myName = prompt("enter your name please : ")
+        var myName = 'omar'
+
         welcomeScreen.style='display:none;'
         multiplayerScreen.style='display:grid;'
+
+
+        db.collection('players').get().then((snapshot) =>{
+            snapshot.forEach((player) =>{
+                
+                document.querySelector('.players-pannel').innerHTML+=`
+                        <div class="player" >
+                        <div class="player-name">${player.data().name}</div>
+                             <button id="${player.id}" class="challange-btn">challange</button>
+                         </div>
+                         `
+            })
+        })
+
+
+        opponentChoice = 'multiplayer'
+        const challangeBtn = document.querySelectorAll('.challange-btn')
+        challangeBtn.forEach((btn) =>{
+            btn.addEventListener('click', () =>{
+                console.log('s');
+            })
+        })
     })
 
 
 
 
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+
+    
+    
 
 
-
-
-
-
-
+    
 
 
     // end game

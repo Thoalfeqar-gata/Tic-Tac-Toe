@@ -3,14 +3,11 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel = "stylesheet" href = "style.css">
-      <script defer src = "script.js"></script>
+      <link rel = "stylesheet" href = "style.css" />
       <title>Tic Tac Toe</title>
    </head>
    <body>
-
-
-
+      
       <div class = "welcome-screen">
          <div class = "welcome-text"> Welcome to Tic Tac Toe! </div>
          <div class = "options-menu">
@@ -25,21 +22,9 @@
          <div class="header">multiplayer pannel</div>
          <div class="con players-container">
              <div class="con-title">players</div>
-             <div class="con-content">
+             <div class="con-content players-pannel">
                  <div class="player">
-                     <div class="player-name">omat-ctr</div>
-                     <button class="challange-btn">challange</button>
-                 </div>
-             </div>
-             <div class="con-content">
-                 <div class="player">
-                     <div class="player-name">omat-ctr</div>
-                     <button class="challange-btn">challange</button>
-                 </div>
-             </div>
-             <div class="con-content">
-                 <div class="player">
-                     <div class="player-name">omat-ctr</div>
+                     <div class="player-name">omar</div>
                      <button class="challange-btn">challange</button>
                  </div>
              </div>
@@ -97,9 +82,7 @@
 
 
 
-      <div class="multiplayer-screen">
-          
-      </div>
+   
 
 
 
@@ -144,20 +127,12 @@
 
 
 
-<!-- firebase configuration START -->
-      <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-        const firebaseConfig = {
-          apiKey: "AIzaSyDz-CSU24VJcs9Gqk8JzqcdqUx9RoJMwZA",
-          authDomain: "tic-tac-toe-project-c7c17.firebaseapp.com",
-          projectId: "tic-tac-toe-project-c7c17",
-          storageBucket: "tic-tac-toe-project-c7c17.appspot.com",
-          messagingSenderId: "341483133647",
-          appId: "1:341483133647:web:61161cd38a0777348035ba"
-        };
-        // Initializing Firebase
-        const app = initializeApp(firebaseConfig);
-      </script>
-<!-- firebase configuration END -->
+   <!-- firebase configuration START -->
+   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+   <script src="./firebase.js"></script>
+   <!-- firebase configuration END -->
+   <script src = "script.js"></script>
+
    </body>
 </html>
