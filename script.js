@@ -1,6 +1,11 @@
 const Game = (() =>{
 
 
+
+
+
+
+
     //Inner factory functions.    
     const GameBoard = (() =>
     {
@@ -125,14 +130,14 @@ const Game = (() =>{
         {
             if(winnerName == null)
             {
-                prompt.textContent = "A tie!";
+                input.textContent = "A tie!";
             }
             else
             {
-                prompt.textContent = `The winner is: ${winnerName}`;
+                input.textContent = `The winner is: ${winnerName}`;
             }
 
-            prompt.classList.add("winner-prompt-active");
+            input.classList.add("winner-input-active");
             overlay.classList.add("overlay-active");
         }
 
@@ -290,7 +295,7 @@ const Game = (() =>{
     const welcomeScreen = document.querySelector(".welcome-screen");
     // const start = document.querySelector(".start");
     const options = document.querySelector(".options");
-    const prompt = document.querySelector(".winner-prompt");
+    const input = document.querySelector(".winner-input");
     const overlay = document.querySelector(".overlay");
     const optionsScreen = document.querySelector(".options-screen");
     const firstPlayerName = document.querySelector(".first-player-name");
@@ -401,7 +406,7 @@ const Game = (() =>{
 
     overlay.addEventListener("click", event =>
     {
-        prompt.classList.remove("winner-prompt-active");
+        input.classList.remove("winner-input-active");
         overlay.classList.remove("overlay-active");
         GameBoard.reInitialize();
         updateCurrent(firstPlayer);
@@ -467,9 +472,13 @@ const Game = (() =>{
 
     // adding firebase
     const multiplayer = document.querySelector('.multiplayer')
+    const multiplayerScreen = document.querySelector(".multiplayer-screen")
+    
+
     multiplayer.addEventListener('click', ()=>{
+        var myName = prompt("enter your name please : ")
         welcomeScreen.style='display:none;'
-        
+        multiplayerScreen.style='display:grid;'
     })
 
 
@@ -482,6 +491,9 @@ const Game = (() =>{
 
 
 
+
+
+    // end game
     return {run};
 })();
 

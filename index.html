@@ -20,9 +20,62 @@
       </div>
 
 
+   <!-- multiplayer pannel START -->
       <div class="multiplayer-screen">
-         
-      </div>
+         <div class="header">multiplayer pannel</div>
+         <div class="con players-container">
+             <div class="con-title">players</div>
+             <div class="con-content">
+                 <div class="player">
+                     <div class="player-name">omat-ctr</div>
+                     <button class="challange-btn">challange</button>
+                 </div>
+             </div>
+             <div class="con-content">
+                 <div class="player">
+                     <div class="player-name">omat-ctr</div>
+                     <button class="challange-btn">challange</button>
+                 </div>
+             </div>
+             <div class="con-content">
+                 <div class="player">
+                     <div class="player-name">omat-ctr</div>
+                     <button class="challange-btn">challange</button>
+                 </div>
+             </div>
+         </div>
+         <div class="con empty-container">
+             <div class="comming-soon">comming soon</div>
+         </div>
+         <div class="con recent-games-container">
+             <div class="con-title">recent games</div>
+             <table>
+                 <tr>
+                     <th>players</th>
+                     <th>winner</th>
+                     <th>date</th>
+                 </tr>
+                 <tr>
+                     <td>omar vs code</td>
+                     <td>omar</td>
+                     <td>10/12/2021</td>
+                 </tr>
+                 <tr>
+                     <td>omar vs code</td>
+                     <td>code</td>
+                     <td>10/12/2021</td>
+                 </tr>
+                 <tr>
+                     <td>omar vs code</td>
+                     <td>omar</td>
+                     <td>10/12/2021</td>
+                 </tr>
+             </table>
+         </div>
+     </div>
+   <!-- multiplayer pannel END -->
+
+
 
 
       <div class="options-screen">
@@ -53,7 +106,7 @@
 
       <div class = "overlay">
       </div>
-      <div class = "winner-prompt">
+      <div class = "winner-input">
       </div>
       <div class = "board-container">
          <div id = "top-left" class = "board-block">
@@ -88,9 +141,12 @@
 
 
 
+
+
+
+<!-- firebase configuration START -->
       <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-        // web app Firebase configuration
         const firebaseConfig = {
           apiKey: "AIzaSyDz-CSU24VJcs9Gqk8JzqcdqUx9RoJMwZA",
           authDomain: "tic-tac-toe-project-c7c17.firebaseapp.com",
@@ -102,5 +158,6 @@
         // Initializing Firebase
         const app = initializeApp(firebaseConfig);
       </script>
+<!-- firebase configuration END -->
    </body>
 </html>

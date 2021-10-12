@@ -126,8 +126,8 @@ input, select{
 
 
 
-/*winner prompt selectors*/
-.winner-prompt
+/*winner input selectors*/
+.winner-input
 {
     position : fixed;
     top : 50%;
@@ -147,7 +147,7 @@ input, select{
     text-align : center;
 }
 
-.winner-prompt-active
+.winner-input-active
 {
     transform :translate(-50%, -50%) scale(1);
 }
@@ -252,10 +252,164 @@ input, select{
         font-size : 54px;
     }
 
-    /*winner prompt*/
-    .winner-prompt
+    /*winner input*/
+    .winner-input
     {
         font-size : 20px;
         height : 20%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* multiplayer style */
+table {
+    border-collapse: collapse;
+}
+th{
+    font-size:1.1em;
+    border-bottom: 1px solid rgb(123, 123, 123);
+}
+
+tr, td, th{
+    padding: 10px;
+    text-align: left;
+}
+td:nth-child(3){
+    border-left: 1px solid gray;
+}
+td:nth-child(2){
+    border-left: 1px solid gray;
+}
+
+
+.comming-soon{
+    font-size: clamp(2em, 6vw, 3em);            
+}
+
+
+body {
+    background-color: black;
+    color: white;
+}
+
+.multiplayer-screen{
+    display: none;
+    position: absolute;
+    inset: 20px 10vw;
+    border-radius: 15px;
+    /* display: grid; */
+    grid-template-columns: 300px minmax(400px,1fr);
+    grid-template-rows: auto 250px 1fr;
+    grid-template-areas: 
+    "header header"
+    "players recent-games"
+    "empty recent-games"
+    ;
+    gap: 15px;
+    font-family: sans-serif;
+}
+
+.con{
+    border-radius: 10px;
+    background-color: #4b4b4b;
+    position: relative;
+}.con::-webkit-scrollbar{display:none;}
+
+
+.header{
+    grid-area: header;
+    font-size: 1.2em;
+    font-weight: 700;
+    text-transform: capitalize;
+    border-bottom: 1px solid #5A5A5A;
+    padding-bottom: 10px;
+}
+.players-container{
+    grid-area: players;
+}
+.empty-container{
+    grid-area: empty;
+}
+.recent-games-container{
+    grid-area: recent-games;
+}
+
+
+
+
+.con{
+    padding: 0 15px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.con-title{
+    font-size:1.2em;
+    font-weight: 600;
+    border-bottom: 2px solid #7c7c7c;
+    padding-bottom: 6px;
+    position: sticky;
+    top: -10px;
+    background-color: #4b4b4b;
+    padding: 15px 0;
+}
+.player{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}.player-name{
+    font-size: 1.1em;
+    text-transform: capitalize;
+}.challange-btn{
+    font-size: 1.1em;
+    font-weight: 600;
+    color: white;
+    background: #FF0000; 
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}.challange-btn:active{
+    filter: brightness(80%);
+    transform: scale(.95);
+}
+
+
+
+@media (max-width: 900px) {
+    .multiplayer-screen{
+        inset: 20px 30px;
+    }
+}
+
+@media (max-width: 770px){
+    .multiplayer-screen{
+        grid-template-columns: 1fr;
+        grid-template-rows: 35px;
+        /* 250px */
+        grid-auto-rows: 1fr;
+        grid-template-areas: 
+        "header"
+        "players"
+        "recent-games"
+        "empty"
+        ;
     }
 }
