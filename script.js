@@ -15,7 +15,15 @@ const Game = (() =>
           -------------
             6 | 7 | 8
         */
-        const cases = [[0, 4, 8], [2, 4, 6], [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
+        const cases = [
+                        [0, 4, 8], 
+                        [2, 4, 6], 
+                        [0, 1, 2], 
+                        [3, 4, 5], 
+                        [6, 7, 8], 
+                        [0, 3, 6], 
+                        [1, 4, 7], 
+                        [2, 5, 8]];
 
         //setup
         for(let i = 0; i < markers.length; i++)
@@ -32,14 +40,13 @@ const Game = (() =>
                     {
                         displayWinner(winnerName);
                     }
+                    else if(isTie())
+                    {
+                        displayWinner(null);
+                        return;
+                    }
                     else
                     {               
-                        if(isTie())
-                        {
-                            displayWinner(null);
-                            return;
-                        }
-
                         if(secondPlayer.type == "normal")
                         {
                             if(currentPlayer == secondPlayer)
@@ -115,14 +122,14 @@ const Game = (() =>
         {
             if(winnerName == null)
             {
-                prompt.textContent = "A tie!";
+                winnerPrompt.textContent = "A tie!";
             }
             else
             {
-                prompt.textContent = `The winner is: ${winnerName}`;
+                winnerPrompt.textContent = `The winner is: ${winnerName}.`;
             }
 
-            prompt.classList.add("winner-prompt-active");
+            winnerPrompt.classList.add("winner-prompt-active");
             overlay.classList.add("overlay-active");
         }
 
@@ -138,9 +145,9 @@ const Game = (() =>
         };
 
 
-        const minimax = (depth, isMaximizing, place) =>
+        const minimax = (isMaximizing, place) =>
         {
-            let [result, winnerName] = checkWinner(place);
+            let result = checkWinner(place)[0];
             
             if(result != null)
             {
@@ -153,12 +160,9 @@ const Game = (() =>
                     return -10;
                 }
             }
-            else
+            else if(isTie())
             {
-                if(isTie())
-                {
-                    return 0;
-                }
+                return 0;
             }
 
             if(isMaximizing)
@@ -169,7 +173,7 @@ const Game = (() =>
                     if(spots[i] == '')
                     {
                         spots[i] = secondPlayer.marker;
-                        let score = minimax(depth + 1, false, i);
+                        let score = minimax(false, i);
                         spots[i] = '';
                         bestScore = Math.max(bestScore, score);
                     }
@@ -184,7 +188,7 @@ const Game = (() =>
                     if(spots[i] == '')
                     {
                         spots[i] = firstPlayer.marker;
-                        let score = minimax(depth + 1, true, i);
+                        let score = minimax(true, i);
                         spots[i] = '';
                         bestScore = Math.min(bestScore, score);
                     }
@@ -202,7 +206,7 @@ const Game = (() =>
                 if(spots[i] == '')
                 {
                     spots[i] = secondPlayer.marker;
-                    let score = minimax(0, false, i);
+                    let score = minimax(false, i);
                     spots[i] = '';
                     if(score > bestScore)
                     {
@@ -280,7 +284,7 @@ const Game = (() =>
     const welcomeScreen = document.querySelector(".welcome-screen");
     const start = document.querySelector(".start");
     const options = document.querySelector(".options");
-    const prompt = document.querySelector(".winner-prompt");
+    const winnerPrompt = document.querySelector(".winner-prompt");
     const overlay = document.querySelector(".overlay");
     const optionsScreen = document.querySelector(".options-screen");
     const markerChoiceX = document.querySelector(".marker-choice-X");
@@ -360,10 +364,29 @@ const Game = (() =>
         {
             if(opponentChoice == "normal")
             {
-                secondPlayer = Player(secondPlayerName.value, "O");
+                if(markerChoice == "X")
+                {
+                    if(secondPlayerName.value == '')
+                        secondPlayer = Player("O", "O");
+                    else
+                        secondPlayer = Player("O", "O");
+                }
+                else if(markerChoice == "O")
+                {
+                    if(secondPlayerName.value == '')
+                        secondPlayer = Player("X", "X");
+                    else
+                        secondPlayer = Player(secondPlayerName.value, "X");
+                    
+                    if(firstPlayerName.value == '')
+                        firstPlayer = Player("O", "O");
+                    else
+                        firstPlayer = Player(firstPlayerName.value, "O");
+                }
+               
             }
 
-            if(opponentChoice == "random")
+            else if(opponentChoice == "random")
             {
                 if(markerChoice == "X")
                 {
@@ -372,7 +395,7 @@ const Game = (() =>
                     else
                         secondPlayer = RandomPlayer(secondPlayerName.value, "O");    
                 }
-                else
+                else if(markerChoice == "O")
                 {
                     if(secondPlayerName.value == '')
                         secondPlayer = RandomPlayer("Random AI", "X");
@@ -388,7 +411,7 @@ const Game = (() =>
                 }
             }
 
-            if(opponentChoice == "smart")
+            else if(opponentChoice == "smart")
             {
                 if(markerChoice == "X")
                 {
@@ -397,7 +420,7 @@ const Game = (() =>
                     else
                         secondPlayer = SmartPlayer(secondPlayerName.value, "O");    
                 }
-                else
+                else if(markerChoice == "O")
                 {
                     if(secondPlayerName.value == '')
                         secondPlayer = SmartPlayer("Smart AI", "X");
@@ -419,15 +442,25 @@ const Game = (() =>
         board.style.display = "flex";
     });
 
+    winnerPrompt.addEventListener("click", event =>
+    {
+        overlay.click();    
+    });
+
     overlay.addEventListener("click", event =>
     {
-        prompt.classList.remove("winner-prompt-active");
+        winnerPrompt.classList.remove("winner-prompt-active");
         overlay.classList.remove("overlay-active");
         GameBoard.reInitialize();
         updateCurrent(firstPlayer);
 
         if(firstPlayer.marker == "O")
-            randomPlay();
+        {
+            if(secondPlayer.type == "random")
+                randomPlay();
+            else if(secondPlayer.type == "smart")
+                smartPlay();
+        }
     });
 
 
@@ -441,12 +474,9 @@ const Game = (() =>
         {
             GameBoard.displayWinner(winnerName);
         }
-        else
+        else if(GameBoard.isTie())
         {
-            if(GameBoard.isTie())
-            {
                 GameBoard.displayWinner(null);
-            }
         }
     };
 
@@ -459,12 +489,9 @@ const Game = (() =>
         {
             GameBoard.displayWinner(winnerName);
         }
-        else
+        else if(GameBoard.isTie())
         {
-            if(GameBoard.isTie())
-            {
                 GameBoard.displayWinner(null);
-            }
         }
     };
 
