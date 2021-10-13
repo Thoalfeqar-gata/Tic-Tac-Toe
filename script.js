@@ -369,7 +369,7 @@ const Game = (() =>
                     if(secondPlayerName.value == '')
                         secondPlayer = Player("O", "O");
                     else
-                        secondPlayer = Player("O", "O");
+                        secondPlayer = Player(secondPlayerName.value, "O");
                 }
                 else if(markerChoice == "O")
                 {
